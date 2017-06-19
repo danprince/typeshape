@@ -1,4 +1,7 @@
-# Typeshape
+<p align="center">
+  <img src"/logo.svg" />
+  <strong>Typeshape</strong>
+</p>
 
 A domain specific language for runtime type checking and dynamic object schemas.
 
