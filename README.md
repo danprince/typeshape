@@ -1,9 +1,6 @@
-<p align="center">
-  <img align="center" src="http://i.imgur.com/rE9S6VY.png" />
-</p>
-
-<h1 align="center">Typeshape</h1>
-
+<h1>
+  <img src="http://i.imgur.com/rE9S6VY.png" /> Typeshape
+</h1>
 
 A domain specific language for runtime type checking and dynamic object schemas.
 
