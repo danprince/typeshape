@@ -1,5 +1,6 @@
 <p align="center">
-  <img src"/logo.svg" />
+  <img src="http://i.imgur.com/rE9S6VY.png" />
+  <br />
   <strong>Typeshape</strong>
 </p>
 
