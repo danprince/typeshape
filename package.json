@@ -1,0 +1,14 @@
+{
+  "name": "shapetype",
+  "version": "0.0.0",
+  "description": "DSL for runtime type checking",
+  "main": "dist/shapetype.js",
+  "author": "Dan Prince",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^20.0.4",
+    "jest-babel": "^1.0.1"
+  }
+}
