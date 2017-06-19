@@ -1,8 +1,8 @@
 {
-  "name": "shapetype",
+  "name": "typeshape",
   "version": "0.0.0",
   "description": "DSL for runtime type checking",
-  "main": "dist/shapetype.js",
+  "main": "dist/typeshape.js",
   "author": "Dan Prince",
   "license": "MIT",
   "devDependencies": {
