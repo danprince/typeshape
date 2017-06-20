@@ -20,6 +20,8 @@ let CardSchema = {
 check(CardSchema, { suit: 'Spades', value: 10 })
 ```
 
+Inspired by [React's PropTypes][1] and [JSON Blueprint][2].
+
 # Getting Started
 Typeshape exposes a `check` function which be used to check whether a value matches a given schema.
 
@@ -217,3 +219,5 @@ let ExampleSchema = {
 }
 ```
 
+[1]: https://www.npmjs.com/package/prop-types
+[2]: http://www.json-blueprint.org/
