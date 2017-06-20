@@ -18,11 +18,47 @@ let CardSchema = {
 check(CardSchema, { suit: 'Spades', value: 10 })
 ```
 
-## Types
-This library exports a handful of basic types that can be used and composed to create schemas.
+# Getting Started
+Typeshape exposes a `check` function which be used to check whether a value matches a given schema.
+
+The simplest kind of schema is just a literal value.
 
 ```js
-import { Types } from 'typeshape';
+import { check } from 'typeshape';
+
+let schema = 1;
+
+check(schema, 1) // true
+check(schema, 2) // TypeError
+```
+
+To create a more reusable schema, we can start to use types instead of literals.
+
+```js
+import { Types, check } from 'typeshape';
+
+let schema = Types.number;
+
+check(schema, 1) // true
+check(schema, '1') // TypeError
+```
+
+We can also configure types to restrict the set of values that they will match against.
+
+```js
+import { Types, check } from 'typeshape';
+
+let schema = Types.number({ '>': 5 });
+
+check(schema, 10) // true
+check(schema, 0) // TypeError
+```
+
+# Types
+This library exports a handful of basic types and combinators that can be combined and composed to create schemas.
+
+```js
+import { Types, Combinators } from 'typeshape';
 ```
 
 ### `Types.number`
@@ -44,13 +80,13 @@ Checks whether a given value is a whole number without a fraction.
 
 ```js
 // Match all numbers
-Types.number
+Types.integer
 
 // Match numbers in exclusive range
-Types.number({ '>': 0, '<': 10 })
+Types.integer({ '>': 0, '<': 10 })
 
 // Match numbers in inclusive range
-Types.number({ '>=': 1, '<=': 9 })
+Types.integer({ '>=': 1, '<=': 9 })
 ```
 
 ### `Types.string`
@@ -118,24 +154,6 @@ Matches exact values.
 Types.literal(3)
 ```
 
-## Combinators
-This library also exports some combinators that can be used to combine types and other combinators to create more complex schemas.
-
-```js
-import { OneOf, Maybe, Not } from 'typeshape';
-
-// or
-
-import { Combinators } from 'typeshape';
-Combinators.OneOf
-```
-
-As is implied by the name, these combinators can be combined.
-
-```js
-Not(OneOf(1, 2, 3))
-```
-
 ### `Combinators.OneOf`
 The `OneOf` combinator takes a number of schemas and matches values that match at least one of those schemas.
 
@@ -180,7 +198,7 @@ Not(Types.boolean)
 Not(42)
 ```
 
-## Generate
+# Generate
 It's also possible to generate a schema from an example value.
 
 ```js
