@@ -2,7 +2,7 @@
   <img src="http://i.imgur.com/rE9S6VY.png" />
 </p>
 <h1 align="center">
-  Typeshape<br /><br />
+  Typeshape<br />
   <img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" />
 </h1>
 
