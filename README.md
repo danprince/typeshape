@@ -1,8 +1,8 @@
 <p align="center">
   <img src="http://i.imgur.com/rE9S6VY.png" />
 </p>
-<h1>
-  Typeshape<br />
+<h1 align="center">
+  Typeshape<br /><br />
   <img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" />
 </h1>
 
