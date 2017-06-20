@@ -1,5 +1,7 @@
 import check from './check';
+import generate from './generate';
 import * as Types from './types';
-export * from './combinators';
+import * as Combinators from './combinators';
 
-export { Types, check }
+export * from './combinators';
+export { Types, Combinators, check, generate }

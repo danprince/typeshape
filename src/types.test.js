@@ -122,6 +122,7 @@ test('Types.array', () => {
 test('Types.object', () => {
   expect(() => Types.object.validateWithoutConfig({})).not.toThrow();
   expect(() => Types.object.validateWithoutConfig([])).not.toThrow();
+  expect(() => Types.object.validateWithoutConfig(null)).not.toThrow();
   expect(() => Types.object.validateWithoutConfig(32)).toThrow(TypeError);
 
   expect(() => Types.object(Types.string)({})).not.toThrow();

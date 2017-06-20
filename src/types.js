@@ -196,7 +196,7 @@ export const literal = Type({
       value
     }
   },
-  validate(value, config) {
+  validate(value, config={}) {
     if (value !== config.value) {
       throw mismatch(config.value, value);
     }
