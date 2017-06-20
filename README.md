@@ -1,5 +1,6 @@
 <h1>
-  <img src="http://i.imgur.com/rE9S6VY.png" /> Typeshape
+  <img src="http://i.imgur.com/rE9S6VY.png" /> Typeshape<br />
+  <img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" />
 </h1>
 
 A domain specific language for runtime type checking and dynamic object schemas.
