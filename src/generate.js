@@ -31,14 +31,14 @@ export function generate(example) {
 }
 
 export function findType(value) {
-  for (let Type of OrderedTypes) {
+  return OrderedTypes.find(Type => {
     try {
       Type.validateWithoutConfig(value);
-      return Type;
+      return true;
     } catch (err) {
-      continue;
+      return false;
     }
-  }
+  });
 }
 
 export default generate
