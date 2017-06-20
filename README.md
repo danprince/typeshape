@@ -2,7 +2,9 @@
 <h1 align="center">
   <img src="http://i.imgur.com/rE9S6VY.png" /><br />
   Typeshape<br />
-  <img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" />
+  <a href="https://travis-ci.org/danprince/typeshape">
+    <img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" />
+  </a>
 </h1>
 
 A domain specific language for runtime type checking and dynamic object schemas.
