@@ -1,6 +1,6 @@
 {
   "name": "typeshape",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "DSL for runtime type checking",
   "main": "dist/typeshape.js",
   "author": "Dan Prince",
