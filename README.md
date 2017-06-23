@@ -150,13 +150,6 @@ __Note:__ Just like JavaScript, the object type also matches `null` values. Most
 ### `Types.any`
 Matches any value.
 
-### `Types.literal`
-Matches exact values.
-
-```js
-Types.literal(3)
-```
-
 ### `Combinators.OneOf`
 The `OneOf` combinator takes a number of schemas and matches values that match at least one of those schemas.
 

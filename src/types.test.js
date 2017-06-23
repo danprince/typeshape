@@ -97,12 +97,6 @@ test('Types.any', () => {
   expect(() => Types.any.validateWithoutConfig(() => {})).not.toThrow();
 });
 
-test('Types.literal', () => {
-  expect(() => Types.literal('Water')('Water')).not.toThrow();
-  expect(() => Types.literal('Water')('Coffee')).toThrow();
-  expect(() => Types.literal(0)('0')).toThrow();
-});
-
 test('Types.array', () => {
   expect(() => Types.array.validateWithoutConfig([])).not.toThrow();
   expect(() => Types.array.validateWithoutConfig(32)).toThrow(TypeError);

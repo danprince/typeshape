@@ -189,19 +189,3 @@ export const any = Type({
   }
 });
 
-export const literal = Type({
-  name: 'literal',
-  configure(value) {
-    return {
-      value
-    }
-  },
-  validate(value, config={}) {
-    if (value !== config.value) {
-      throw mismatch(config.value, value);
-    }
-
-    return true;
-  }
-});
-
