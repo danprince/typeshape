@@ -8,14 +8,14 @@ function validate(schema, value) {
     check(schema, value);
     return {
       valid: true,
-      message: '',
-      path: []
+      reason: '',
+      at: []
     };
   } catch (err) {
     return {
       valid: false,
-      message: err.message,
-      path: err.path
+      reason: err.message,
+      at: err.path
     };
   }
 }

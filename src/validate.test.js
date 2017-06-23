@@ -5,20 +5,20 @@ describe('validate', () => {
   it('should validate literal schemas', () => {
     expect(validate(4, 4)).toEqual({
       valid: true,
-      message: '',
-      path: [],
+      reason: '',
+      at: [],
     });
 
     expect(validate(5, 4)).toEqual({
       valid: false,
-      message: 'Expected 5 but got 4 (number)',
-      path: []
+      reason: 'Expected 5 but got 4 (number)',
+      at: []
     });
 
     expect(validate({ a: 1 }, { a: 2 })).toEqual({
       valid: false,
-      message: 'Expected 1 but got 2 (number)',
-      path: ['a']
+      reason: 'Expected 1 but got 2 (number)',
+      at: ['a']
     });
   });
 });
