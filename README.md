@@ -43,6 +43,13 @@ Inspired by [React's PropTypes][1] and [JSON Blueprint][2].
  - [ ] Write basic usage guide on composing schemas & custom errors
  - [ ] Write advanced usage guide on writing types & combinators
 
+# Todo
+ - [ ] Write a simple app that uses typecheck to lint errors in a codemirror input
+ - [ ] Break docs out into standalone website
+ - [ ] Create a REPL
+ - [ ] Write basic usage guide on composing schemas & custom errors
+ - [ ] Write advanced usage guide on writing types & combinators
+
 # Getting Started
 Typeshape exposes a `check` function which be used to check whether a value matches a given schema.
 
