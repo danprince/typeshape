@@ -31,6 +31,9 @@ export const number = Type({
     if ('<=' in params) config.lte = params['<='];
     if ('>=' in params) config.gte = params['>='];
 
+    if ('min' in params) config.gte = params.min;
+    if ('max' in params) config.lte = params.max;
+
     return config;
   },
   validate(value, config={}) {
@@ -181,10 +184,61 @@ export const object = Type({
   }
 });
 
+export const func = Type({
+  name: 'function',
+  configure(params) {
+    let config = {};
+
+    if ('length' in params) config.length = params.length;
+
+    return config;
+  },
+  validate(value, config) {
+    if (typeof value !== 'function') {
+      throw mismatch('function', value);
+    }
+
+    if (config && 'length' in config && value.length !== config.length) {
+      throw mismatch(
+        `function with ${config.length} arguments`,
+        value,
+        (fn) => `${fn.length} arguments`
+      );
+    }
+
+    return true;
+  }
+});
+
 export const any = Type({
   name: 'any',
   validate(value) {
     return true;
+  }
+});
+
+export const instance = Type({
+  name: 'instance',
+  configure(params) {
+    let config = {};
+
+    config.superclass = params;
+
+    return config;
+  },
+  validate(value, config) {
+    if (config === undefined) {
+      throw new Error(
+        `Types.instance must be configured before use (E.g. Types.instance(Promise))`
+      );
+    }
+
+    if (value instanceof config.superclass) {
+      return true;
+    } else {
+      let name = config.superclass.name || '(Anonymous class)';
+      throw mismatch(`instance of ${name}`, value);
+    }
   }
 });
 

@@ -3,6 +3,7 @@ import { show } from './util';
 
 // Checks whether a value conforms to a given schema, returns true
 // or throws a TypeError.
+
 function check(schema, value, path=[]) {
 
   // Shortcut for supporting unconfigured types, such as Types.string
@@ -12,8 +13,7 @@ function check(schema, value, path=[]) {
   }
 
   // Simplest possible check is to see whether the value has shallow
-  // equality with the schema. This enables writing schemas that contain
-  // literal values without needing to use the Types.literal type.
+  // equality with the schema.
   if (schema === value) {
     return true;
   }
@@ -36,7 +36,7 @@ function check(schema, value, path=[]) {
     for (let key in schema) {
       let test = schema[key];
 
-      if (key in value) {
+      if (value && key in value) {
         check(schema[key], value[key], [...path, key]);
       } else {
         throw invalid(`Missing key: ${show(key)}`, path);

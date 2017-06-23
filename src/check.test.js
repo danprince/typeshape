@@ -1,6 +1,7 @@
 import check from './check';
 import * as Types from './types';
 import { OneOf, Maybe, Not } from './combinators';
+import { NamedSchema } from './util';
 
 describe('check', () => {
   it('should check literal schemas', () => {
@@ -105,6 +106,69 @@ describe('check', () => {
     } catch (err) {
       expect(err.path).toEqual(['foo', '0']);
     }
+  });
+
+  it('should work with weird and wonderful composition', () => {
+    let NoNumbersArray = Types.array(Not(Types.number));
+
+    expect(() => check(NoNumbersArray, ['3', null, new Date, /hello/])).not.toThrow();
+    expect(() => check(NoNumbersArray, ['3', null, 3, /hello/])).toThrowError(
+      `Expected not "number" but got 3`
+    );
+
+    let SmallNumbersArray = Types.array(Types.number({ '<=': 1 }));
+
+    expect(() => check(SmallNumbersArray, [.2, .9, .3])).not.toThrow();
+    expect(() => check(SmallNumbersArray, [.1, 20, .2])).toThrowError(
+      `Expected <= 1 but got 20 (number)`
+    );
+
+    let BlacklistSchema = Not(OneOf('foo', 'bar'));
+
+    expect(() => check(BlacklistSchema, 'qux')).not.toThrow();
+    expect(() => check(BlacklistSchema, 'foo')).toThrowError(
+      `Expected not "OneOf(foo or bar)" but got "foo"`
+    );
+
+    let GridSchema = Types.array({
+      type: Types.array({ length: 2 }),
+      length: 2
+    });
+
+    expect(() => check(GridSchema, [[0, 1], [1, 0]])).not.toThrow()
+    expect(() => check(GridSchema, [[0, 1], [1]])).toThrowError(
+      `Expected array of length 2 but got [1] (length 1)`
+    );
+  });
+
+  it('should work with recursive schema', () => {
+    let TreeSchema = NamedSchema('TreeSchema', {});
+    let NodeSchema = OneOf(TreeSchema, Types.integer);
+
+    TreeSchema.left = NodeSchema;
+    TreeSchema.right = NodeSchema;
+
+    let goodTree = {
+      left: 1,
+      right: {
+        left: 2,
+        right: 3
+      }
+    };
+
+    expect(() => check(TreeSchema, goodTree)).not.toThrow();
+
+    let badTree = {
+      left: 1,
+      right: {
+        left: 4,
+        right: null
+      }
+    };
+
+    expect(() => check(TreeSchema, badTree)).toThrowError(
+      `Expected one of "TreeSchema" or "integer" but got`
+    );
   });
 });
 

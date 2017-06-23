@@ -1,3 +1,5 @@
+import { show } from './util';
+
 // Helper function alternative to typeof that understands more specific
 // types: e.g. Array, Date, RegExp etc.
 export function type(any) {
@@ -9,10 +11,8 @@ export function type(any) {
 // between an expected and actual value - along with printing the
 // value and its type.
 export function mismatch(expected, actual, hint=type) {
-  let actualOutput = JSON.stringify(actual, null, 2);
-
   let error = new TypeError(
-    `Expected ${expected} but got ${actualOutput} (${hint(actual)})`
+    `Expected ${expected} but got ${show(actual)} (${hint(actual)})`
   );
 
   return error;

@@ -2,7 +2,7 @@ import check from './check';
 import { name, show } from './util';
 
 export function Maybe(type) {
-  return (value) => {
+  function maybe(value) {
     if (value === null || value === undefined) {
       return true;
     }
@@ -11,14 +11,20 @@ export function Maybe(type) {
       return check(type, value);
     } catch (err) {
       throw new TypeError(
-        `Expected either ${name(type)} or null or undefined, but got ${show(value)}`
+        `Expected either ${name(type)} or null or undefined but got ${show(value)}`
       );
     }
   };
+
+  maybe.schemaName = `Maybe(${name(type)})`;
+
+  return maybe;
 }
 
 export function OneOf(...types) {
-  return (value) => {
+  let names = types.map(name);
+
+  function oneOf(value) {
     let isValid = types.some(type => {
       try {
         check(type, value);
@@ -29,16 +35,21 @@ export function OneOf(...types) {
     });
 
     if (isValid === false) {
-      let names = types.map(name);
       throw new TypeError(
-        `Expected one of ${names.join(' or ')}, but got ${show(value)}`
+        `Expected one of ${names.join(' or ')} but got ${show(value)}`
       );
     }
   }
+
+  oneOf.schemaName = `OneOf(${names.join(' or ')})`;
+
+  return oneOf;
 }
 
 export function All(...types) {
-  return (value) => {
+  let names = types.map(name);
+
+  function all(value) {
     let isValid = types.every(type => {
       try {
         check(type, value);
@@ -49,22 +60,29 @@ export function All(...types) {
     });
 
     if (isValid === false) {
-      let names = types.map(name);
-      throw new TypeError(`Expected all of ${names.join(' and ')}, but got ${show(value)}`);
+      throw new TypeError(`Expected all of ${names.join(' and ')} but got ${show(value)}`);
     }
   }
+
+  all.schemaName = `All(${names.join(' and ')})`;
+
+  return all;
 }
 
 export function Not(type) {
-  return (value) => {
+  function not(value){
     try {
       check(type, value);
     } catch (err) {
       return true;
     }
 
-    throw new TypeError(`Expected not ${name(type)}, but got ${show(value)}`);
+    throw new TypeError(`Expected not ${name(type)} but got ${show(value)}`);
   }
+
+  not.schemaName = `Not(${name(type)})`;
+
+  return not;
 }
 
 export function Throws(type, message) {

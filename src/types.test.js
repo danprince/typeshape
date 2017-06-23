@@ -131,6 +131,19 @@ test('Types.object', () => {
   }
 });
 
+test('Types.func', () => {
+  expect(() => Types.func.validateWithoutConfig(() => {})).not.toThrow();
+  expect(() => Types.func.validateWithoutConfig(32)).toThrowError(
+    `Expected function but got 32 (number)`
+  );
+
+  expect(() => Types.func({ length: 0 })(() => {})).not.toThrow();
+  expect(() => Types.func({ length: 1 })((a) => {})).not.toThrow();
+  expect(() => Types.func({ length: 2 })((a) => {})).toThrowError(
+    `Expected function with 2 arguments but got function (a) {} (1 arguments)`
+  );
+});
+
 test('Types.any', () => {
   expect(() => Types.any.validateWithoutConfig('Water')).not.toThrow();
   expect(() => Types.any.validateWithoutConfig(32)).not.toThrow();
@@ -139,5 +152,16 @@ test('Types.any', () => {
   expect(() => Types.any.validateWithoutConfig(null)).not.toThrow();
   expect(() => Types.any.validateWithoutConfig(undefined)).not.toThrow();
   expect(() => Types.any.validateWithoutConfig(() => {})).not.toThrow();
+});
+
+test('Types.instance', () => {
+  expect(() => Types.instance.validateWithoutConfig(() => {})).toThrowError(
+    /must be configured/
+  );
+
+  expect(() => Types.instance(Array)([])).not.toThrow();
+  expect(() => Types.instance(Array)(3)).toThrowError(
+    `Expected instance of Array but got 3 (number)`
+  );
 });
 
