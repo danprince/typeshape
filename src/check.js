@@ -1,3 +1,6 @@
+import mismatch from './mismatch';
+import { show } from './util';
+
 // Checks whether a value conforms to a given schema, returns true
 // or throws a TypeError.
 function check(schema, value, path=[]) {
@@ -20,7 +23,10 @@ function check(schema, value, path=[]) {
     try {
       return schema(value);
     } catch (err) {
-      throw invalid(err.message, path);
+      throw invalid(
+        err.message,
+        [...path, ...(err.path || [])]
+      );
     }
   }
 
@@ -33,13 +39,13 @@ function check(schema, value, path=[]) {
       if (key in value) {
         check(schema[key], value[key], [...path, key]);
       } else {
-        throw invalid(`Missing key: ${key}`, path);
+        throw invalid(`Missing key: ${show(key)}`, path);
       }
     }
 
     for (let key in value) {
       if (!(key in schema)) {
-        throw invalid(`Unexpected key: ${key}`, path);
+        throw invalid(`Unexpected key: ${show(key)}`, path);
       }
     }
 
@@ -48,7 +54,8 @@ function check(schema, value, path=[]) {
 
   // If we get to here, then we're probably validating against a
   // literal schema that failed the shallow equality check.
-  throw invalid(`Does not match ${schema}`, path);;
+  let error = mismatch(schema, value);
+  throw invalid(error.message, path);
 }
 
 function invalid(message, path) {

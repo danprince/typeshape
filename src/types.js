@@ -39,19 +39,19 @@ export const number = Type({
     }
 
     if ('lt' in config && !(value < config.lt)) {
-      throw mismatch(`< ${config.lt}`);
+      throw mismatch(`< ${config.lt}`, value);
     }
 
     if ('lte' in config && !(value <= config.lte)) {
-      throw mismatch(`<= ${config.lte}`);
+      throw mismatch(`<= ${config.lte}`, value);
     }
 
     if ('gt' in config && !(value > config.gt)) {
-      throw mismatch(`> ${config.gt}`);
+      throw mismatch(`> ${config.gt}`, value);
     }
 
     if ('gte' in config && !(value >= config.gte)) {
-      throw mismatch(`>= ${config.gte}`);
+      throw mismatch(`>= ${config.gte}`, value);
     }
 
     return true;
@@ -94,19 +94,19 @@ export const string = Type({
     }
 
     if ('pattern' in config && !config.pattern.test(value)) {
-      throw mismatch(`string matching pattern ${config.pattern}`, value);
+      throw mismatch(`string to match ${config.pattern}`, value);
     }
 
     if ('length' in config && value.length !== config.length) {
-      throw mismatch(`string of length ${config.length}`);
+      throw mismatch(`string of length ${config.length}`, value, (str) => `length ${str.length}`);
     }
 
     if ('minLength' in config && value.length < config.minLength) {
-      throw mismatch(`string of min length ${config.minLength}`);
+      throw mismatch(`string of min length ${config.minLength}`, value, (str) => `length ${str.length}`);
     }
 
     if ('maxLength' in config && value.length > config.maxLength) {
-      throw mismatch(`string of max length ${config.maxLength}`);
+      throw mismatch(`string of max length ${config.maxLength}`, value, (str) => `length ${str.length}`);
     }
 
     return true;
@@ -123,7 +123,6 @@ export const boolean = Type({
     return true;
   }
 });
-
 
 export const array = Type({
   name: 'array',
@@ -145,12 +144,12 @@ export const array = Type({
     }
 
     if ('length' in config && value.length !== config.length) {
-      throw mismatch(`array with length ${config.length}`, value);
+      throw mismatch(`array of length ${config.length}`, value, (arr) => `length ${arr.length}`);
     }
 
     if ('type' in config) {
       for (let index = 0; index < value.length; index++) {
-        check(config.type, value[index], [index]);
+        check(config.type, value[index], [String(index)]);
       }
     }
 

@@ -8,11 +8,11 @@ export function type(any) {
 // Convenient way to create a TypeError that describes a mismatch
 // between an expected and actual value - along with printing the
 // value and its type.
-export function mismatch(expected, actual) {
+export function mismatch(expected, actual, hint=type) {
   let actualOutput = JSON.stringify(actual, null, 2);
 
   let error = new TypeError(
-    `Expected ${expected}\nGot ${type(actual)} = ${actualOutput}`
+    `Expected ${expected} but got ${actualOutput} (${hint(actual)})`
   );
 
   return error;

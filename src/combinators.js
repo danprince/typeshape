@@ -1,4 +1,5 @@
 import check from './check';
+import { name, show } from './util';
 
 export function Maybe(type) {
   return (value) => {
@@ -9,7 +10,9 @@ export function Maybe(type) {
     try {
       return check(type, value);
     } catch (err) {
-      throw new TypeError(`Expected either ${type.schemaName} or null or undefined`);
+      throw new TypeError(
+        `Expected either ${name(type)} or null or undefined, but got ${show(value)}`
+      );
     }
   };
 }
@@ -26,20 +29,11 @@ export function OneOf(...types) {
     });
 
     if (isValid === false) {
-      throw new TypeError(`Expected one of ${types.join(', ')}`);
+      let names = types.map(name);
+      throw new TypeError(
+        `Expected one of ${names.join(' or ')}, but got ${show(value)}`
+      );
     }
-  }
-}
-
-export function Not(type) {
-  return (value) => {
-    try {
-      check(type, value);
-    } catch (err) {
-      return true;
-    }
-
-    throw new TypeError(`Expected not ${type}`);
   }
 }
 
@@ -55,8 +49,21 @@ export function All(...types) {
     });
 
     if (isValid === false) {
-      throw new TypeError(`Expected all of ${types.join(', ')}`);
+      let names = types.map(name);
+      throw new TypeError(`Expected all of ${names.join(' and ')}, but got ${show(value)}`);
     }
+  }
+}
+
+export function Not(type) {
+  return (value) => {
+    try {
+      check(type, value);
+    } catch (err) {
+      return true;
+    }
+
+    throw new TypeError(`Expected not ${name(type)}, but got ${show(value)}`);
   }
 }
 
