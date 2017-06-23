@@ -1,6 +1,7 @@
 // Checks whether a value conforms to a given schema, returns true
 // or throws a TypeError.
 function check(schema, value, path=[]) {
+
   // Shortcut for supporting unconfigured types, such as Types.string
   // rather than forcing passing of an empty config.
   if (schema.validateWithoutConfig) {
@@ -19,19 +20,7 @@ function check(schema, value, path=[]) {
     try {
       return schema(value);
     } catch (err) {
-      let location = path.join('.');
-      throw new TypeError(`Shape mismatch at: "${location}".\n${err.message}`);
-    }
-  }
-
-  // Support custom messages (e.g. [Types.string, 'My message'])
-  if (hasCustomMessage(schema)) {
-    let [test, message] = schema;
-
-    try {
-      return check(test, value, path);
-    } catch (err) {
-      throw new TypeError(message);
+      throw invalid(err.message, path);
     }
   }
 
@@ -44,13 +33,13 @@ function check(schema, value, path=[]) {
       if (key in value) {
         check(schema[key], value[key], [...path, key]);
       } else {
-        throw new TypeError(`Missing key ${key}`);
+        throw invalid(`Missing key: ${key}`, path);
       }
     }
 
     for (let key in value) {
       if (!(key in schema)) {
-        throw new TypeError(`Unexpected key ${key}`);
+        throw invalid(`Unexpected key: ${key}`, path);
       }
     }
 
@@ -59,19 +48,13 @@ function check(schema, value, path=[]) {
 
   // If we get to here, then we're probably validating against a
   // literal schema that failed the shallow equality check.
-  throw new TypeError(`Does not match ${schema}`);
+  throw invalid(`Does not match ${schema}`, path);;
 }
 
-// Rough check to see whether a given schema looks like a custom
-// message. Note that this syntax means you can't use a literal schema
-// of [someFunc, someString] because it'll be interpreted as a message.
-function hasCustomMessage(schema) {
-  return (
-    Array.isArray(schema) &&
-    schema.length === 2 &&
-    typeof schema[0] === 'function' &&
-    typeof schema[1] === 'string'
-  );
+function invalid(message, path) {
+  let error = new TypeError(message);
+  error.path = path;
+  return error;
 }
 
 export default check

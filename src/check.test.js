@@ -21,23 +21,6 @@ describe('check', () => {
     expect(() => check({ a: 1 }, { a: 1, b: 2 })).toThrow(TypeError);
   });
 
-  it('should support custom messages', () => {
-    let SuitSchema = [Types.string, 'Invalid suit'];
-    expect(() => check(SuitSchema, 43)).toThrowError(/Invalid suit/);
-
-    let FaceSchema = [OneOf('Ace', 'King', 'Queen', 'Jack'), 'Invalid face'];
-    expect(() => check(FaceSchema, 43)).toThrowError(/Invalid face/);
-
-    let CardSchema = {
-      value: Types.integer,
-      suit: [OneOf('Clubs', 'Spades', 'Hearts', 'Diamonds'), 'Invalid suit']
-    }
-
-    expect(() =>
-      check(CardSchema, { value: 3, suit: 'Jock' })
-    ).toThrowError(/Invalid suit/);
-  });
-
   it('should check simple type schemas', () => {
     expect(() => check(Types.string, '')).not.toThrow();
     expect(() => check(Types.string, 3)).toThrow(TypeError);
@@ -49,4 +32,33 @@ describe('check', () => {
     expect(() => check(CardSchema, { suit: 'Clubs', value: 1 })).not.toThrow();
     expect(() => check(CardSchema, { suit: 'Clubs', value: 1.3 })).toThrow(TypeError);
   });
+
+  it('should throw errors with paths for nested type mismatches', () => {
+    let CardSchema = { suit: Types.string, value: Types.integer };
+
+    try {
+      check(CardSchema, { suit: 'Clubs', value: 1.3 });
+    } catch (err) {
+      expect(err.path).toEqual(['value']);
+    }
+  });
+
+  it('should throw errors with paths for deeply nested type mismatches', () => {
+    let NestedSchema = {
+      down: {
+        the: {
+          rabbit: {
+            hole: Types.number
+          }
+        }
+      }
+    };
+
+    try {
+      check(NestedSchema, { down: { the: { rabbit: { hole: '???' } } } });
+    } catch (err) {
+      expect(err.path).toEqual(['down', 'the', 'rabbit', 'hole']);
+    }
+  });
 });
+

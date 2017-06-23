@@ -18,14 +18,15 @@ export function OneOf(...types) {
   return (value) => {
     let isValid = types.some(type => {
       try {
-        return check(type, value);
+        check(type, value);
+        return true;
       } catch (err) {
         return false;
       }
     });
 
     if (isValid === false) {
-      throw new TypeError(`Expected one of ${types}`);
+      throw new TypeError(`Expected one of ${types.join(', ')}`);
     }
   }
 }
@@ -39,6 +40,34 @@ export function Not(type) {
     }
 
     throw new TypeError(`Expected not ${type}`);
+  }
+}
+
+export function All(...types) {
+  return (value) => {
+    let isValid = types.every(type => {
+      try {
+        check(type, value);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    });
+
+    if (isValid === false) {
+      throw new TypeError(`Expected all of ${types.join(', ')}`);
+    }
+  }
+}
+
+export function Throws(type, message) {
+  return (value) => {
+    try {
+      check(type, value);
+      return true;
+    } catch (err) {
+      throw new TypeError(message);
+    }
   }
 }
 
