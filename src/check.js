@@ -45,7 +45,7 @@ function check(schema, value, path=[]) {
 
     for (let key in value) {
       if (!(key in schema)) {
-        throw invalid(`Unexpected key: ${show(key)}`, path);
+        throw invalid(`Unexpected key: ${show(key)}`, [...path, key]);
       }
     }
 

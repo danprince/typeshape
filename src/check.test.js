@@ -28,6 +28,12 @@ describe('check', () => {
     expect(() => check({ a: 1 }, { a: 1, b: 2 })).toThrowError(
       `Unexpected key: "b"`
     );
+
+    try {
+      check({ a: 1 }, { a: 1, b: 2 });
+    } catch (err) {
+      expect(err.path).toEqual(['b']);
+    }
   });
 
   it('should check simple type schemas', () => {
