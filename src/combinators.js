@@ -85,7 +85,7 @@ export function Not(type) {
   return not;
 }
 
-export function Throws(type, message) {
+export function Explain(type, message) {
   return (value) => {
     try {
       check(type, value);

@@ -1,4 +1,4 @@
-import { Maybe, OneOf, All, Not, Throws } from './combinators';
+import { Maybe, OneOf, All, Not, Explain } from './combinators';
 import * as Types from './types';
 
 test('Combinators.Maybe', () => {
@@ -44,8 +44,8 @@ test('Combinators.Not', () => {
   );
 });
 
-test('Combinators.Throws', () => {
-  let CustomNumber = Throws(Types.number, 'My custom error');
+test('Combinators.Explain', () => {
+  let CustomNumber = Explain(Types.number, 'My custom error');
   expect(() => CustomNumber(3)).not.toThrow();
   expect(() => CustomNumber({})).toThrowError(
     /My custom error/
