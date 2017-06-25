@@ -1,10 +1,11 @@
-
 <h1 align="center">
-  <img src="http://i.imgur.com/rE9S6VY.png" /><br />
-  Typeshape<br />
+  Typeshape
+</h1>
+
+<p align="center">
   <a href="https://travis-ci.org/danprince/typeshape"><img src="https://travis-ci.org/danprince/typeshape.svg?branch=master" height="18"/></a>
   <a href="https://badge.fury.io/js/typeshape"><img src="https://badge.fury.io/js/typeshape.svg" alt="npm version" height="18"></a>
-</h1>
+</p>
 
 A domain specific language for runtime type checking and dynamic object schemas.
 
@@ -19,7 +20,7 @@ let CardSchema = {
 check(CardSchema, { suit: 'Spades', value: 10 })
 ```
 
-Inspired by [React's PropTypes][1] and [JSON Blueprint][2].
+Inspired by [Clojure Spec][1], [React's PropTypes][2] and [JSON Blueprint][3].
 
 # Docs
 * [Getting started](docs/getting-started.md)
@@ -35,57 +36,11 @@ Inspired by [React's PropTypes][1] and [JSON Blueprint][2].
   * [OneOf](docs/combinators.md#OneOf)
   * [Maybe](docs/combinators.md#Maybe)
   * [Not](docs/combinators.md#Not)
+  * [And](docs/combinators.md#And)
+  * [Explain](docs/combinators.md#Explain)
+* [Writing Types & Combinators](docs/custom-types.md)
 
-# Todo
- - [ ] Write a simple app that uses typecheck to lint errors in a codemirror input
- - [ ] Break docs out into standalone website
- - [ ] Create a REPL
- - [ ] Write basic usage guide on composing schemas & custom errors
- - [ ] Write advanced usage guide on writing types & combinators
+[1]: https://clojure.org/about/spec
+[2]: https://www.npmjs.com/package/prop-types
+[3]: http://www.json-blueprint.org/
 
-# Todo
- - [ ] Write a simple app that uses typecheck to lint errors in a codemirror input
- - [ ] Break docs out into standalone website
- - [ ] Create a REPL
- - [ ] Write basic usage guide on composing schemas & custom errors
- - [ ] Write advanced usage guide on writing types & combinators
-
-# Getting Started
-Typeshape exposes a `check` function which be used to check whether a value matches a given schema.
-
-The simplest kind of schema is just a literal value.
-
-```js
-import { check } from 'typeshape';
-
-let schema = 1;
-
-check(schema, 1) // true
-check(schema, 2) // TypeError
-```
-
-To create a less specific schema, we can use types instead of literals.
-
-```js
-import { Types, check } from 'typeshape';
-
-let schema = Types.number;
-
-check(schema, 1) // true
-check(schema, '1') // TypeError
-```
-
-We can also configure types to restrict the set of values that they will match against.
-
-```js
-import { Types, check } from 'typeshape';
-
-let schema = Types.number({ '>': 5 });
-
-check(schema, 10) // true
-check(schema, 0) // TypeError
-```
-
-
-[1]: https://www.npmjs.com/package/prop-types
-[2]: http://www.json-blueprint.org/
