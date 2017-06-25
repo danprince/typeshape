@@ -7,7 +7,7 @@
   <a href="https://badge.fury.io/js/typeshape"><img src="https://badge.fury.io/js/typeshape.svg" alt="npm version" height="18"></a>
 </p>
 
-A domain specific language for runtime type checking and dynamic object schemas.
+A domain specific language for runtime type checking against composable schemas.
 
 ```js
 import { Types, OneOf, check } from 'typeshape';
@@ -20,9 +20,9 @@ let CardSchema = {
 check(CardSchema, { suit: 'Spades', value: 10 })
 ```
 
-Inspired by [Clojure Spec][1], [React's PropTypes][2] and [JSON Blueprint][3].
+Inspired by [Clojure Spec][1], [React PropTypes][2] and [JSON Blueprint][3].
 
-# Docs
+## Docs
 * [Getting started](docs/getting-started.md)
 * [Types](docs/types.md)
   * [number](docs/types.md#number)
@@ -38,7 +38,11 @@ Inspired by [Clojure Spec][1], [React's PropTypes][2] and [JSON Blueprint][3].
   * [Not](docs/combinators.md#Not)
   * [And](docs/combinators.md#And)
   * [Explain](docs/combinators.md#Explain)
-* [Writing Types & Combinators](docs/custom-types.md)
+
+## Rationale
+Many applications and tools operate with structured data that the user provides at runtime, such as data sets, configuration files and task descriptions. Normally, these data sources are well beyond the reach of compile-time type checks, so its the programmer's responsibility to build parsing/validation interfaces that receive and handle the data elegantly.
+
+Typeshape exists to help programmers write declarative, composable runtime schemas that can be used to validate against potentially malformed data, giving the programmer the tools they need to let the user know what, where and why an error occurred.
 
 [1]: https://clojure.org/about/spec
 [2]: https://www.npmjs.com/package/prop-types

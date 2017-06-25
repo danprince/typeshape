@@ -5,7 +5,7 @@ This library exports a handful of basic types that can be combined and composed 
 import { Types } from 'typeshape';
 ```
 
-### number
+## number
 Checks whether a value is a JavaScript number.
 
 ```js
@@ -19,7 +19,7 @@ Types.number({ '>': 0, '<': 10 })
 Types.number({ '>=': 1, '<=': 9 })
 ```
 
-### integer
+## integer
 Checks whether a given value is a whole number without a fraction.
 
 ```js
@@ -33,7 +33,7 @@ Types.integer({ '>': 0, '<': 10 })
 Types.integer({ '>=': 1, '<=': 9 })
 ```
 
-### string
+## string
 Checks whether a given value is a string.
 
 ```js
@@ -51,7 +51,7 @@ Types.string({ length: 3 })
 Types.string({ minLength: 1, maxLength: 10 })
 ```
 
-### boolean
+## boolean
 Checks whether a given value is a boolean.
 
 ```js
@@ -59,7 +59,7 @@ Checks whether a given value is a boolean.
 Types.boolean
 ```
 
-### array
+## array
 Checks whether a given value is an array.
 
 ```js
@@ -74,7 +74,7 @@ Types.array({ type: Types.string })
 Types.array({ length: 3 })
 ```
 
-### object
+## object
 Checks whether a given value is an object.
 
 ```js
@@ -88,9 +88,6 @@ Types.object({ type: Types.string })
 
 __Note:__ Just like JavaScript, the object type also matches `null` values. Most of the time you should define schemas with object literals rather than `Types.object`.
 
-### any
+## any
 Matches any value.
-
-## Writing New Types
-Guide on writing a new type
 

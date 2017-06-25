@@ -4,10 +4,10 @@ This library exports a handful of basic types that can be combined and composed 
 ```js
 import { Combinators } from 'typeshape';
 // or
-import { OneOf, Maybe, Not } from 'typeshape';
+import { OneOf, Maybe, Not, All, Explain } from 'typeshape';
 ```
 
-### OneOf
+## OneOf
 The `OneOf` combinator takes a number of schemas and matches values that match at least one of those schemas.
 
 ```js
@@ -18,7 +18,7 @@ OneOf(Types.string, Types.number)
 OneOf('Hearts', 'Clubs', 'Diamonds', 'Spades')
 ```
 
-### Maybe
+## Maybe
 The `Maybe` combinator takes a schema and matches values that are either `undefined`, `null` or match that schema.
 
 ```js
@@ -40,7 +40,7 @@ The `Maybe` combinator could also be created from the `OneOf` combinator.
 let MaybeString = OneOf(Types.string, null, undefined);
 ```
 
-### Not
+## Not
 The `Not` combinator negates the resulting match for a given schema.
 
 ```js
@@ -51,6 +51,23 @@ Not(Types.boolean)
 Not(42)
 ```
 
-## Writing New Combinators
-Guide on writing a combinator
+## All
+The `All` matches values that match all of its schemas.
+
+```js
+
+```
+
+## Explain
+The `Explain` combinator can be used to attach specific explanations to a given schema.
+
+```js
+let HouseSchema = Explain(
+  OneOf('Stark', 'Lannister', 'Martell', 'Targaryen'),
+  'Must be one of the Great Houses!'
+);
+
+HouseSchema('Snow')
+// TypeError: Must be one of the Great Houses!
+```
 
