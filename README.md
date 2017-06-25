@@ -10,14 +10,20 @@
 A domain specific language for runtime type checking against composable schemas.
 
 ```js
-import { Types, OneOf, check } from 'typeshape';
+import { Types, OneOf, validate } from 'typeshape';
 
 let CardSchema = {
   suit: OneOf('Spades', 'Diamonds', 'Clubs', 'Hearts'),
   value: Types.number({ '>': 0, '<': 14 })
 };
 
-check(CardSchema, { suit: 'Spades', value: 10 })
+validate(CardSchema, { suit: 'Spaded', value: 10 })
+
+// {
+//   valid: false,
+//   reason: 'Expected one of "Spades" or "Diamonds" or "Clubs" or "Hearts" but got "Spaded"',
+//   at: ['suit']
+// }
 ```
 
 Inspired by [Clojure Spec][1], [React PropTypes][2] and [JSON Blueprint][3].
@@ -42,7 +48,7 @@ Inspired by [Clojure Spec][1], [React PropTypes][2] and [JSON Blueprint][3].
 ## Rationale
 Many applications and tools operate with structured data that the user provides at runtime, such as data sets, configuration files and task descriptions. Normally, these data sources are well beyond the reach of compile-time type checks, so its the programmer's responsibility to build parsing/validation interfaces that receive and handle the data elegantly.
 
-Typeshape exists to help programmers write declarative, composable runtime schemas that can be used to validate against potentially malformed data, giving the programmer the tools they need to let the user know what, where and why an error occurred.
+Typeshape exists to help programmers write declarative, composable runtime schemas that can be used to validate against potentially malformed data, giving the programmer the tools they need to let the user know where and why an error occurred.
 
 [1]: https://clojure.org/about/spec
 [2]: https://www.npmjs.com/package/prop-types

@@ -88,6 +88,29 @@ Types.object({ type: Types.string })
 
 __Note:__ Just like JavaScript, the object type also matches `null` values. Most of the time you should define schemas with object literals rather than `Types.object`.
 
+## func
+Checks whether a given value is a function.
+
+```js
+// Matches any function
+Types.func
+
+// Matches functions with 2 arguments
+Types.func({ length: 2 })
+```
+
+## instance
+Matches all values that are instances of a given class.
+
+```js
+// Matches all arrays
+Types.instance(Array)
+```
+
 ## any
 Matches any value.
+
+```js
+Types.any
+```
 
