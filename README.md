@@ -26,6 +26,8 @@ validate(CardSchema, { suit: 'Spaded', value: 10 })
 // }
 ```
 
+Check out the [demo](https://codepen.io/danprince/full/awyREY/)!
+
 Inspired by [Clojure Spec][1], [React PropTypes][2] and [JSON Blueprint][3].
 
 ## Docs
