@@ -7,7 +7,7 @@
   <a href="https://badge.fury.io/js/typeshape"><img src="https://badge.fury.io/js/typeshape.svg" alt="npm version" height="18"></a>
 </p>
 
-A domain specific language for runtime type checking against composable schemas.
+Runtime type checking against composable schemas.
 
 ```js
 import { Types, OneOf, validate } from 'typeshape';
