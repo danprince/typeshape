@@ -9,13 +9,13 @@ function validate(schema, value) {
     return {
       valid: true,
       reason: '',
-      at: []
+      path: []
     };
   } catch (err) {
     return {
       valid: false,
       reason: err.message,
-      at: err.path
+      path: err.path
     };
   }
 }
