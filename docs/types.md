@@ -99,6 +99,13 @@ Types.func
 Types.func({ length: 2 })
 ```
 
+## any
+Matches any value.
+
+```js
+Types.any
+```
+
 ## instance
 Matches all values that are instances of a given class.
 
@@ -107,10 +114,5 @@ Matches all values that are instances of a given class.
 Types.instance(Array)
 ```
 
-## any
-Matches any value.
-
-```js
-Types.any
-```
+__Note:__ Unlike most types, the instance type can't be used without being configured. You must pass a superclass as an argument before it can be used as a schema.
 

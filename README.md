@@ -22,7 +22,7 @@ validate(CardSchema, { suit: 'Spaded', value: 10 })
 // {
 //   valid: false,
 //   reason: 'Expected one of "Spades" or "Diamonds" or "Clubs" or "Hearts" but got "Spaded"',
-//   at: ['suit']
+//   path: ['suit']
 // }
 ```
 
@@ -48,9 +48,9 @@ Inspired by [Clojure Spec][1], [React PropTypes][2] and [JSON Blueprint][3].
   * [Explain](docs/combinators.md#Explain)
 
 ## Rationale
-Many applications and tools operate with structured data that the user provides at runtime, such as data sets, configuration files and task descriptions. Normally, these data sources are well beyond the reach of compile-time type checks, so its the programmer's responsibility to build parsing/validation interfaces that receive and handle the data elegantly.
+Many applications and tools operate with structured data that the user provides at runtime, such as data sets, configuration files and task descriptions. Normally, these data sources are well beyond the reach of compile-time type checks, so it's the programmer's responsibility to build parsing and validation interfaces that receive and handle the data elegantly.
 
-Typeshape exists to help programmers write declarative, composable runtime schemas that can be used to validate against potentially malformed data, giving the programmer the tools they need to let the user know where and why an error occurred.
+Typeshape helps you write declarative, composable runtime schemas that programmers can use to validate potentially malformed data, providing the tool needed to let the user know where and why an error occurred.
 
 [1]: https://clojure.org/about/spec
 [2]: https://www.npmjs.com/package/prop-types

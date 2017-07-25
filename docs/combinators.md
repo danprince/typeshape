@@ -55,7 +55,8 @@ Not(42)
 The `All` matches values that match all of its schemas.
 
 ```js
-
+// Matches objects with name and score properties that are also instances of Player
+All({ name: Types.string, score: Types.integer }, Types.instance(Player))
 ```
 
 ## Explain
@@ -70,4 +71,6 @@ let HouseSchema = Explain(
 HouseSchema('Snow')
 // TypeError: Must be one of the Great Houses!
 ```
+
+This error message will show up in the `reason` field of the validation result returned by the `validate` function.
 
